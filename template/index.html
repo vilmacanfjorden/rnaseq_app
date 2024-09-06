@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gene Expression Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Gene Expression Analysis</h1>
+            <form method="post">
+                <label for="gene_name">Select Gene:</label>
+                <input type="text" id="gene_name" name="gene_name" value="{{ gene_name }}">
+
+                {% for query in color_queries %}
+                <div class="color-query">
+                    <label for="query_{{ query.index }}">Query:</label>
+                    <input type="text" id="query_{{ query.index }}" name="query_{{ query.index }}" value="{{ query.query }}">
+
+                    <label for="color_{{ query.index }}">Color:</label>
+                    <select id="color_{{ query.index }}" name="color_{{ query.index }}">
+                        <option value="green" {% if query.color == 'green' %}selected{% endif %}>Green</option>
+                        <option value="cyan" {% if query.color == 'cyan' %}selected{% endif %}>Cyan</option>
+                        <option value="pink" {% if query.color == 'pink' %}selected{% endif %}>Pink</option>
+                        <option value="blue" {% if query.color == 'blue' %}selected{% endif %}>Blue</option>
+                        <option value="red" {% if query.color == 'red' %}selected{% endif %}>Red</option>
+                        <option value="orange" {% if query.color == 'orange' %}selected{% endif %}>Orange</option>
+                        <!-- Add more color options as needed -->
+                    </select>
+                </div>
+                {% endfor %}
+
+                <button type="submit">Submit</button>
+                <button type="button" id="add-query" class="add-query-button">Add New Color Query</button>
+            </form>
+
+            <!-- Form to download PDF -->
+            <form method="post" action="/download-pdf">
+                <input type="hidden" name="gene_name" value="{{ gene_name }}">
+                {% for query in color_queries %}
+                    <input type="hidden" name="query_{{ query.index }}" value="{{ query.query }}">
+                    <input type="hidden" name="color_{{ query.index }}" value="{{ query.color }}">
+                {% endfor %}
+                <button type="submit">Download PDF</button>
+            </form>
+        </div>
+
+        <div class="plot-container">
+            {% if plot_html %}
+            {{ plot_html|safe }}
+            {% else %}
+            <p>No plot available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('add-query').addEventListener('click', function() {
+            const queryCount = document.querySelectorAll('.color-query').length;
+            const newQueryIndex = queryCount + 1;
+
+            const newQueryGroup = document.createElement('div');
+            newQueryGroup.className = 'color-query';
+
+            newQueryGroup.innerHTML = `
+                <label for="query_${newQueryIndex}">Query:</label>
+                <input type="text" id="query_${newQueryIndex}" name="query_${newQueryIndex}">
+                <label for="color_${newQueryIndex}">Color:</label>
+                <select id="color_${newQueryIndex}" name="color_${newQueryIndex}">
+                    <option value="green">Green</option>
+                    <option value="cyan">Cyan</option>
+                    <option value="pink">Pink</option>
+                    <option value="blue">Blue</option>
+                    <option value="red">Red</option>
+                    <option value="orange">Orange</option>
+                    <!-- Add more color options as needed -->
+                </select>
+            `;
+
+            document.querySelector('form').insertBefore(newQueryGroup, document.getElementById('add-query'));
+        });
+    </script>
+</body>
+</html>
