@@ -40,8 +40,8 @@ def load_files(file_paths):
 
 if __name__ == "__main__":
     file_paths = [
-        "test_countmatrix.txt",
-        "test_countmatrix_2.txt"
+        "data/test_countmatrix.txt",
+        "data/test_countmatrix_2.txt"
         # Add more file paths as needed
     ]
     load_files(file_paths)
