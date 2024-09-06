@@ -40,13 +40,8 @@ def load_files(file_paths):
 
 if __name__ == "__main__":
     file_paths = [
-        "231201_mls-402_normalized_counts.txt",
-        "231201_mls-avory_normalized_counts.txt",
-        "231202_mls-1765_normalized_counts.txt",
-        "231204_ews-6647_normalized_counts.txt",
-        "231204_ews-tc_normalized_counts.txt",
-        "231204_ht1080-fd_normalized_counts.txt",
-        "231204_ht1080-wt_normalized_counts.txt"
+        "test_countmatrix.txt",
+        "test_countmatrix_2.txt"
         # Add more file paths as needed
     ]
     load_files(file_paths)
