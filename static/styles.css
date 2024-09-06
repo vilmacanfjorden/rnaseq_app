@@ -1,0 +1,90 @@
+/* Apply the Heiti TC font to the whole page */
+body {
+    font-family: "Calibri", sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #4c6787;
+}
+
+/* Header-specific styling */
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Heiti TC", sans-serif; /* Set the font for headers */
+    color: #4c6787; /* Optional: Set a default color for headers */
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+/* Form container styling */
+.form-container {
+    flex: 1;
+    max-width: 300px; /* Adjust width as needed */
+    padding: 20px;
+    background-color: #f0f0f0; /* Grey background color */
+    border-radius: 8px; /* Rounded corners */
+    border: 1px solid #ddd; /* Border for definition */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+.plot-container {
+    flex: 2; /* Adjust the flex-basis value as needed */
+    padding-left: 20px;
+}
+
+.form-container {
+    flex: 1; /* Adjust the flex-basis value as needed */
+    max-width: 300px; /* Adjust the width as needed */
+    padding-left: 15px;
+    border-left: 2px solid #ddd; /* Optional: add a border for separation */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.color-query {
+    margin-bottom: 10px;
+}
+
+label {
+    margin-right: 10px;
+}
+
+input[type="text"] {
+    width: 93%;
+    padding: 8px;
+    margin-bottom: 10px;
+    color: #9eb1c8;
+
+}
+
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 8px;
+    color: #9eb1c8;
+}
+
+button {
+    padding: 10px 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #AEBAD2;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #8792AE;
+}
+
+.add-query-button {
+    background-color: #C5C5C5;
+}
+
+.add-query-button:hover {
+    background-color: #AEAEAE;
+}
