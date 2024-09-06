@@ -1,4 +1,4 @@
-gene	Sample1_normal	Sample2_normal	Sample3_normal	Sample4_normal	Sample5_treatment1	Sample6_treatment1	Sample7_treatment1	Sample8_treatment1	Sample9_treatment2	Sample10_treatment2	Sample11_treatment2	Sample12_treatment2	Sample13_treatment3	Sample14_treatment3	Sample15_treatment3	Sample16_treatment3	Sample17_treatment4	Sample18_treatment4	Sample19_treatment4	Sample20_treatment4
+gene	Sample1_normal	Sample2_normal	Sample3_normal	Sample4_normal	Sample1_treatment1	Sample2_treatment1	Sample3_treatment1	Sample4_treatment1	Sample1_treatment2	Sample2_treatment2	Sample3_treatment2	Sample4_treatment2	Sample1_treatment3	Sample2_treatment3	Sample3_treatment3	Sample4_treatment3	Sample1_treatment4	Sample2_treatment4	Sample3_treatment4	Sample4_treatment4
 TSPAN6	190.5	620.3	855.2	470.6	410.7	548.5	722.4	795.9	465.2	440.1	668.4	710.7	810.1	350.9	385.4	600.6	785.2	890.3	385.7	305.4
 DPM1	690.0	1015.7	885.6	1695.4	1420.3	960.8	785.4	1850.2	1280.4	765.5	865.0	780.6	1620.1	1670.0	740.3	665.2	725.7	800.1	1540.6	600.0
 SCYL3	220.5	150.0	185.0	200.0	140.0	190.0	165.0	155.0	150.0	205.0	195.0	190.0	160.0	180.0	125.0	190.0	180.0	165.0	155.0	145.0
