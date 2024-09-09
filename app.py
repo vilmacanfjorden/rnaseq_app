@@ -14,14 +14,44 @@ db.init_app(app)
 
 def get_data(gene_name=None):
     with app.app_context():
+        # Query the data based on the gene name
         if gene_name:
             data = GeneExpression.query.filter_by(gene=gene_name).all()
         else:
             data = GeneExpression.query.all()
 
+        # Create DataFrame from the queried data
         df = pd.DataFrame([(d.gene, d.sample, d.expression_value) for d in data],
                           columns=['gene', 'sample', 'expression_value'])
-        return df
+
+        # Extract cell line and treatment from the sample names
+        df['cell_line'] = df['sample'].apply(lambda x: '-'.join(x.split('-')[:2]))
+
+        # Adjusted extraction logic to handle 'PAN-AZD' and other treatments
+        def extract_treatment(sample):
+            parts = sample.split('-')
+            if 'PAN' in parts[-2] and 'AZD' in parts[-1]:
+                return 'PAN-AZD'
+            elif 'AZD' in parts[-1]:
+                return 'AZD'
+            elif 'PANO' in parts[-1]:
+                return 'PANO'
+            elif 'PAN' in parts[-1]:
+                return 'PANO'
+            elif 'DMSO' in parts[-1]:
+                return 'DMSO'
+            elif 'Imatinib' in parts[-1]:
+                return 'Imatinib'
+            else:
+                return parts[-1].split('_')[0]  # Default behavior
+
+        df['treatment'] = df['sample'].apply(extract_treatment)
+
+        # Calculate the mean expression value for each cell line and treatment
+        df_grouped = df.groupby(['gene', 'cell_line', 'treatment']).agg({'expression_value': 'mean'}).reset_index()
+
+        return df_grouped
+
 
 def create_plot(df, color_queries):
     gene = ''.join(df["gene"].unique())
@@ -34,22 +64,25 @@ def create_plot(df, color_queries):
                 return color
         return default_color
 
-    df['color'] = df['sample'].apply(get_color)
-    sample_order = df['sample'].unique().tolist()
-    df['sample'] = pd.Categorical(df['sample'], categories=sample_order, ordered=True)
+    # Combine cell line and treatment for visualization
+    df['group'] = df['cell_line'] + ' - ' + df['treatment']
+    df['color'] = df['group'].apply(get_color)
+    group_order = df['group'].unique().tolist()
+    df['group'] = pd.Categorical(df['group'], categories=group_order, ordered=True)
 
-    fig = px.bar(df, x='sample', y='expression_value',
+    # Create the bar plot with group and expression value
+    fig = px.bar(df, x='group', y='expression_value',
                  title=f'Gene Expression Values in {gene}',
-                 labels={'sample': 'Sample', 'expression_value': 'Expression Value'},
+                 labels={'group': 'Group', 'expression_value': 'Expression Value'},
                  color='color',
                  color_discrete_map={color: color for color in df['color'].unique()})
 
     fig.update_layout(
-        xaxis_title='Sample',
+        xaxis_title='Group',
         yaxis_title='Expression Value',
         xaxis_tickangle=-45,
         xaxis_categoryorder='array',
-        xaxis_categoryarray=sample_order,
+        xaxis_categoryarray=group_order,
         font=dict(family="Calibri, sans-serif"),
         title_font=dict(size=24),
         title={'x':0.14,'y':0.93},
